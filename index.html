@@ -1,0 +1,134 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Time Calc</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <div class="row justify-content-center">
+        <div class="col mb-3 text-center">
+          <label for="targetHours" class="form-label">Hora</label>
+          <input
+            type="number"
+            class="form-control"
+            id="targetHours"
+            max="23"
+            min="0"
+          />
+        </div>
+        <div class="col mb-3 text-center">
+          <label for="targetMinutes" class="form-label">Minutos</label>
+          <input
+            type="number"
+            class="form-control"
+            id="targetMinutes"
+            max="59"
+            min="0"
+          />
+        </div>
+        <div class="col mb-3 text-center">
+          <label for="targetSeconds" class="form-label">Segundos</label>
+          <input
+            type="number"
+            class="form-control"
+            id="targetSeconds"
+            max="59"
+            min="0"
+          />
+        </div>
+        <div class="col mb-3 text-center">
+          <label for="targetMiliseconds" class="form-label">Milisegundos</label>
+          <input
+            type="number"
+            class="form-control"
+            id="targetMiliseconds"
+            max="999"
+            min="0"
+          />
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-auto">
+          <select class="form-select" aria-label="Default select example">
+            <option value="+" selected>+</option>
+            <option value="-">-</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col mb-3 text-center">
+          <label for="valueHours" class="form-label">Hora</label>
+          <input
+            type="number"
+            class="form-control"
+            id="valueHours"
+            max="23"
+            min="0"
+          />
+        </div>
+        <div class="col mb-3 text-center">
+          <label for="valueMinutes" class="form-label">Minutos</label>
+          <input
+            type="number"
+            class="form-control"
+            id="valueMinutes"
+            max="59"
+            min="0"
+          />
+        </div>
+        <div class="col mb-3 text-center">
+          <label for="valueSeconds" class="form-label">Segundos</label>
+          <input
+            type="number"
+            class="form-control"
+            id="valueSeconds"
+            max="59"
+            min="0"
+          />
+        </div>
+        <div class="col mb-3 text-center">
+          <label for="valueMiliseconds" class="form-label">Milisegundos</label>
+          <input
+            type="number"
+            class="form-control"
+            id="valueMiliseconds"
+            max="999"
+            min="0"
+          />
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-auto mb-3">
+          <a id="calc" class="btn btn-primary">Calcular</a>
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="mb-3 text-center">
+            <input type="text" class="form-control text-uppercase text-center font fw-bold border-0" id="resultDay" />
+          </div>
+        <div class="mb-3 text-center">
+          <input type="text" class="form-control text-uppercase text-center font fw-bold border-0" id="result" />
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="index.js"></script>
+  </body>
+</html>
