@@ -1,4 +1,3 @@
-let coordInputs = $(".coords_input");
 let targetCoordsInput = $(".target_coords");
 let calculateBtn = $("#calculate_btn");
 let unitsInputs = $(".unitsInput");
@@ -13,9 +12,9 @@ function debug() {
   $("#unit_input_snob").prop("checked", true);
 }
 
-debug();
-
 function registerEventHandlers() {
+  const coordInputs = $(".coords_input");
+
   coordInputs.bind("keyup", function (e) {
     let value = $(this).val();
     if (e.which !== 8) {
@@ -265,5 +264,8 @@ function clearErrorMessages() {
   });
 }
 
-initField();
-registerEventHandlers();
+$(document).ready(function () {
+  debug();
+  initField();
+  registerEventHandlers();
+});
