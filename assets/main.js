@@ -6,6 +6,15 @@ let timeInput = $("#time_input");
 let addOriginBtn = $("#add_origin");
 let removeOriginBtn = $("#remove_origin");
 
+function debug() {
+  $(".origin_coords").val("578|521");
+  $(".target_coords").val("529|424");
+
+  $("#unit_input_snob").prop("checked", true);
+}
+
+debug();
+
 function registerEventHandlers() {
   coordInputs.bind("keyup", function (e) {
     let value = $(this).val();
@@ -117,7 +126,7 @@ function calculateTimes() {
     var resultMiliseconds = targetMilliseconds;
 
     if (resultHours < 0) {
-      resultHours = (travelDays - 1) * 24 + resultHours;
+      resultHours = 24 + resultHours;
     }
 
     if (resultMinutes < 0) {
