@@ -65,8 +65,14 @@ function initField() {
   timeInput.val(formattedDateTime);
 }
 
+function validateCoordinates(coords) {
+  const pattern = /^\d{3}\|\d{3}$/;
+  return pattern.test(coords);
+}
+
 function calculateTimes() {
   var commands = [];
+  let hasErrors = false;
 
   let selectedUnits = [];
   unitsInputs.each(function () {
@@ -76,20 +82,28 @@ function calculateTimes() {
   });
 
   if (selectedUnits.length === 0) {
+    hasErrors = true;
     showError("units_error_message", "Escolha pelo menos uma unidade!");
     return;
   }
 
   $(".origin_coords").each(function () {
     let originCoordsValue = $(this).val();
+    let targetCoordsValue = $(this).val();
+    if (!validateCoordinates(originCoordsValue) || !validateCoordinates(targetCoordsValue)) {
+      hasErrors = true;
+      showError("coords_error_message", "As coordenadas não estão corretas!");
+      return;
+    }
     let originCoords = originCoordsValue.split("|");
     let targetCoords = targetCoordsInput.val().split("|");
 
     var [travelHours, travelMinutes, travelSeconds] = calculateTravelTime(originCoords[0], originCoords[1], targetCoords[0], targetCoords[1], selectedUnits);
     var travelDays = 0;
+
     if (travelHours > 24) {
-      travelDays = Math.floor(totalHours / 24);
-      travelHours = totalHours % 24;
+      travelDays = Math.ceil(travelHours / 24);
+      travelHours = travelHours % 24;
     }
 
     var [targetDay, targetMonth, targetYear, targetHours, targetMinutes, targetSeconds, targetMilliseconds] = parseDate(timeInput.val());
@@ -103,7 +117,7 @@ function calculateTimes() {
     var resultMiliseconds = targetMilliseconds;
 
     if (resultHours < 0) {
-      resultHours = resultDay * 24 + resultHour;
+      resultHours = (travelDays - 1) * 24 + resultHours;
     }
 
     if (resultMinutes < 0) {
@@ -121,44 +135,62 @@ function calculateTimes() {
       resultMiliseconds = 1000 + resultMiliseconds;
     }
 
-    var commandTime = `${resultDay}-${resultMonth}-${resultYear} ${addZeroIsLessThanTen(resultHours)}:${addZeroIsLessThanTen(resultMinutes)}:${addZeroIsLessThanTen(
-      resultSeconds
-    )}:${resultMiliseconds}`;
+    let givenDate = new Date(`${resultYear}-${resultMonth}-${resultDay}`);
 
-    commands.push({ origin: originCoordsValue, command: commandTime });
+    const today = new Date();
+
+    const isToday = givenDate.getDate() === today.getDate() && givenDate.getMonth() === today.getMonth() && givenDate.getFullYear() === today.getFullYear();
+
+    commands.push({
+      origin: originCoordsValue,
+      command: {
+        day: isToday ? "hoje às" : `a ${resultDay}.${resultMonth} às`,
+        hours: addZeroIsLessThanTen(resultHours),
+        minutes: addZeroIsLessThanTen(resultMinutes),
+        seconds: addZeroIsLessThanTen(resultSeconds),
+        milliseconds: resultMiliseconds,
+      },
+    });
   });
 
-  generateHtml(commands);
+  if (!hasErrors) generateHtml(commands);
 }
 
-function generateHtml(commands) {
-  let commandsHtml = ``;
-  $(commands).each(function () {
-    commandsHtml += `
-    <tr>
-      <th colspan="2">${$(this)[0].origin}</th>
-    </tr>
-    <tr>
-      <td>Data de envio</td>
-      <td>${$(this)[0].command}</td>
-    </tr>
+async function generateHtml(commands) {
+  const promises = $(commands)
+    .map(async function () {
+      let [x, y] = $(this)[0].origin.split("|");
+      let info = await getVillageInfo(x, y);
+      let command = $(this)[0].command;
+      return `
+      <tr>
+        <th colspan="2"><a target="_blank" href="https://pt94.tribalwars.com.pt/game.php?village=${info.id}&screen=place">${info.villageName} (${$(this)[0].origin})</a></th>
+      </tr>
+      <tr>
+        <td><strong>Data de envio:</strong></td>
+        <td>${command.day} ${command.hours}:${command.minutes}:${command.seconds}:<span class="grey small">${command.milliseconds}</span></td>
+      </tr>
     `;
-  });
-  let html = `
+    })
+    .get();
+
+  const commandsHtml = await Promise.all(promises);
+
+  const html = `
     <table style="width:100%;">
     <tbody>
-        <tr>
-          <td>
-            <div class="vis">
-              <table style="width:100%;">
-                <tbody>
-                  ${commandsHtml}
-                </tbody>
-              </table>
-            </div>
-          </td>
-        </tr>
-      </tbody>
+      <tr>
+        <td>
+          <div class="vis">
+            <table style="width:100%;">
+              <tbody>
+                ${commandsHtml.join("")}
+              </tbody>
+            </table>
+          </div>
+        </td>
+      </tr>
+    </tbody>
     </table>
   `;
 
@@ -166,11 +198,20 @@ function generateHtml(commands) {
   $("#results").html(html);
 }
 
-function getVillages() {
-  fetch("assets/villages.txt")
+async function getVillageInfo(x, y) {
+  return fetch("https://tiagopeer.github.io/TimeCalc/assets/villages.txt")
     .then((response) => response.text())
-    .then((text) => console.log(text));
-  // outputs the content of the text file
+    .then((text) => {
+      var lines = text.split("\n");
+      for (let i = 0; i <= lines.length; i++) {
+        var fields = lines[i].split(",");
+        if (fields[2] == x && fields[3] == y) return { id: fields[0], name: fields[1] };
+      }
+    })
+    .then((info) => {
+      const villageName = decodeURIComponent(info.name.replace(/\+/g, " "));
+      return { id: info.id, villageName };
+    });
 }
 
 function parseDate(date) {

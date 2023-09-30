@@ -56,23 +56,7 @@
                                                           name="origin_input"
                                                           maxlength="7"
                                                           class="target-input-field coords_input origin_coords"
-                                                          value="528|424"
-                                                          autocomplete="off"
-                                                          tabindex="14"
-                                                          placeholder="123|456"
-                                                        />
-                                                      </div>
-                                                    </td>
-                                                  </tr>
-                                                  <tr class="coords_input_tr">
-                                                    <td>
-                                                      <div id="place_origin" class="target-input float_left">
-                                                        <input
-                                                          type="text"
-                                                          name="origin_input"
-                                                          maxlength="7"
-                                                          class="target-input-field coords_input origin_coords"
-                                                          value="529|424"
+                                                          value=""
                                                           autocomplete="off"
                                                           tabindex="14"
                                                           placeholder="123|456"
@@ -100,7 +84,7 @@
                                                           name="target_input"
                                                           maxlength="7"
                                                           class="target-input-field coords_input target_coords"
-                                                          value="527|424"
+                                                          value=""
                                                           autocomplete="off"
                                                           tabindex="14"
                                                           placeholder="123|456"
@@ -111,6 +95,11 @@
                                                 </tbody>
                                               </table>
                                             </div>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td colspan="2">
+                                            <div id="coords_error_message" class="error_message"></div>
                                           </td>
                                         </tr>
                                       </tbody>
@@ -317,7 +306,6 @@
       ></script>
 
       <script src="assets/utils.js"></script>
-      <script src="assets/index.js"></script>
       <script src="assets/main.js"></script>
     </main>
   </body>
