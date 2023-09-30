@@ -10,125 +10,315 @@
       integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="assets/css/village_target.css" />
+    <link rel="stylesheet" href="assets/css/game.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
   </head>
   <body>
-    <div class="container mt-5">
-      <div class="row justify-content-center">
-        <div class="col mb-3 text-center">
-          <label for="targetHours" class="form-label">Hora</label>
-          <input
-            type="number"
-            class="form-control"
-            id="targetHours"
-            max="23"
-            min="0"
-          />
-        </div>
-        <div class="col mb-3 text-center">
-          <label for="targetMinutes" class="form-label">Minutos</label>
-          <input
-            type="number"
-            class="form-control"
-            id="targetMinutes"
-            max="59"
-            min="0"
-          />
-        </div>
-        <div class="col mb-3 text-center">
-          <label for="targetSeconds" class="form-label">Segundos</label>
-          <input
-            type="number"
-            class="form-control"
-            id="targetSeconds"
-            max="59"
-            min="0"
-          />
-        </div>
-        <div class="col mb-3 text-center">
-          <label for="targetMiliseconds" class="form-label">Milisegundos</label>
-          <input
-            type="number"
-            class="form-control"
-            id="targetMiliseconds"
-            max="999"
-            min="0"
-          />
-        </div>
+    <main>
+      <div class="top_bar">
+        <div class="bg_left"></div>
+        <div class="bg_right"></div>
       </div>
+      <div class="fake-bar"></div>
+      <table id="main_layout">
+        <tr style="height: 48px"></tr>
+        <tr class="shadedBG">
+          <td class="bg_left">
+            <div class="bg_left"></div>
+          </td>
+          <td class="maincell">
+            <table id="contentContainer" width="100%">
+              <tbody>
+                <tr>
+                  <td>
+                    <table class="content-border" width="100%" cellspacing="0">
+                      <tbody>
+                        <tr>
+                          <td id="inner-border">
+                            <table class="main">
+                              <tbody>
+                                <tr>
+                                  <td id="content_value">
+                                    <table>
+                                      <tbody>
+                                        <tr>
+                                          <td>
+                                            <div id="command_origin" class="target-select vis float_left" data-on-choice="onCommandTargetChoice">
+                                              <h4>Origem:</h4>
+                                              <table class="vis" style="width: 100%">
+                                                <tbody>
+                                                  <tr class="coords_input_tr">
+                                                    <td>
+                                                      <div id="place_origin" class="target-input float_left">
+                                                        <input
+                                                          type="text"
+                                                          name="origin_input"
+                                                          maxlength="7"
+                                                          class="target-input-field coords_input origin_coords"
+                                                          value="528|424"
+                                                          autocomplete="off"
+                                                          tabindex="14"
+                                                          placeholder="123|456"
+                                                        />
+                                                      </div>
+                                                    </td>
+                                                  </tr>
+                                                  <tr class="coords_input_tr">
+                                                    <td>
+                                                      <div id="place_origin" class="target-input float_left">
+                                                        <input
+                                                          type="text"
+                                                          name="origin_input"
+                                                          maxlength="7"
+                                                          class="target-input-field coords_input origin_coords"
+                                                          value="529|424"
+                                                          autocomplete="off"
+                                                          tabindex="14"
+                                                          placeholder="123|456"
+                                                        />
+                                                      </div>
+                                                    </td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td align="right"><a class="btn" id="add_origin">Adicionar</a><a class="btn" id="remove_origin">Remover</a></td>
+                                                  </tr>
+                                                </tbody>
+                                              </table>
+                                            </div>
+                                          </td>
+                                          <td style="vertical-align: top">
+                                            <div id="command_target" class="target-select vis float_left" data-on-choice="onCommandTargetChoice">
+                                              <h4>Destino:</h4>
+                                              <table class="vis" style="width: 100%">
+                                                <tbody>
+                                                  <tr>
+                                                    <td>
+                                                      <div id="place_target" class="target-input float_left">
+                                                        <input
+                                                          type="text"
+                                                          name="target_input"
+                                                          maxlength="7"
+                                                          class="target-input-field coords_input target_coords"
+                                                          value="527|424"
+                                                          autocomplete="off"
+                                                          tabindex="14"
+                                                          placeholder="123|456"
+                                                        />
+                                                      </div>
+                                                    </td>
+                                                  </tr>
+                                                </tbody>
+                                              </table>
+                                            </div>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                    <table>
+                                      <tbody>
+                                        <tr>
+                                          <td>
+                                            <table>
+                                              <tbody>
+                                                <tr>
+                                                  <td valign="top">
+                                                    <table class="vis" width="100%">
+                                                      <tbody>
+                                                        <tr>
+                                                          <th>Infantaria</th>
+                                                        </tr>
+                                                        <tr>
+                                                          <td class="nowrap">
+                                                            <a href="#" class="unit_link" data-unit="spear">
+                                                              <img src="https://dspt.innogamescdn.com/asset/f3e2d00f/graphic/unit/unit_spear.png" class="" data-title="Lanceiro" />
+                                                            </a>
+                                                            <input id="unit_input_spear" name="spear" type="checkbox" tabindex="1" value="spear" class="unitsInput" data-all-count="0" />
+                                                          </td>
+                                                        </tr>
+                                                        <tr>
+                                                          <td class="nowrap">
+                                                            <a href="#" class="unit_link" data-unit="sword">
+                                                              <img src="https://dspt.innogamescdn.com/asset/f3e2d00f/graphic/unit/unit_sword.png" class="" data-title="Espadachim" />
+                                                            </a>
+                                                            <input id="unit_input_sword" name="sword" type="checkbox" tabindex="2" value="sword" class="unitsInput" data-all-count="0" />
+                                                          </td>
+                                                        </tr>
+                                                        <tr>
+                                                          <td class="nowrap">
+                                                            <a href="#" class="unit_link" data-unit="axe">
+                                                              <img src="https://dspt.innogamescdn.com/asset/f3e2d00f/graphic/unit/unit_axe.png" class="" data-title="Viking" />
+                                                            </a>
+                                                            <input id="unit_input_axe" name="axe" type="checkbox" tabindex="3" value="axe" class="unitsInput" data-all-count="181" />
+                                                          </td>
+                                                        </tr>
+                                                      </tbody>
+                                                    </table>
+                                                  </td>
+                                                  <td valign="top">
+                                                    <table class="vis" width="100%">
+                                                      <tbody>
+                                                        <tr>
+                                                          <th>Cavalaria</th>
+                                                        </tr>
+                                                        <tr>
+                                                          <td class="nowrap">
+                                                            <a href="#" class="unit_link" data-unit="spy">
+                                                              <img src="https://dspt.innogamescdn.com/asset/f3e2d00f/graphic/unit/unit_spy.png" class="" data-title="Batedor" />
+                                                            </a>
+                                                            <input id="unit_input_spy" name="spy" type="checkbox" tabindex="4" value="spy" class="unitsInput" data-all-count="40" />
+                                                          </td>
+                                                        </tr>
+                                                        <tr>
+                                                          <td class="nowrap">
+                                                            <a href="#" class="unit_link" data-unit="light">
+                                                              <img src="https://dspt.innogamescdn.com/asset/f3e2d00f/graphic/unit/unit_light.png" class="" data-title="Cavalaria leve" />
+                                                            </a>
+                                                            <input id="unit_input_light" name="light" type="checkbox" tabindex="5" value="light" class="unitsInput" data-all-count="92" />
+                                                          </td>
+                                                        </tr>
+                                                        <tr>
+                                                          <td class="nowrap">
+                                                            <a href="#" class="unit_link" data-unit="heavy">
+                                                              <img src="https://dspt.innogamescdn.com/asset/f3e2d00f/graphic/unit/unit_heavy.png" class="" data-title="Cavalaria Pesada" />
+                                                            </a>
+                                                            <input id="unit_input_heavy" name="heavy" type="checkbox" tabindex="6" value="heavy" class="unitsInput" data-all-count="0" />
+                                                          </td>
+                                                        </tr>
+                                                      </tbody>
+                                                    </table>
+                                                  </td>
+                                                  <td valign="top">
+                                                    <table class="vis" width="100%">
+                                                      <tbody>
+                                                        <tr>
+                                                          <th>Máquinas de guerra</th>
+                                                        </tr>
+                                                        <tr>
+                                                          <td class="nowrap">
+                                                            <a href="#" class="unit_link" data-unit="ram">
+                                                              <img src="https://dspt.innogamescdn.com/asset/f3e2d00f/graphic/unit/unit_ram.png" class="" data-title="Aríete" />
+                                                            </a>
+                                                            <input id="unit_input_ram" name="ram" type="checkbox" tabindex="7" value="ram" class="unitsInput" data-all-count="5" />
+                                                          </td>
+                                                        </tr>
+                                                        <tr>
+                                                          <td class="nowrap">
+                                                            <a href="#" class="unit_link" data-unit="catapult">
+                                                              <img src="https://dspt.innogamescdn.com/asset/f3e2d00f/graphic/unit/unit_catapult.png" class="" data-title="Catapulta" />
+                                                            </a>
+                                                            <input id="unit_input_catapult" name="catapult" type="checkbox" tabindex="8" value="catapult" class="unitsInput" data-all-count="0" />
+                                                          </td>
+                                                        </tr>
+                                                      </tbody>
+                                                    </table>
+                                                  </td>
+                                                  <td valign="top">
+                                                    <table class="vis" width="100%">
+                                                      <tbody>
+                                                        <tr>
+                                                          <th>Outro</th>
+                                                        </tr>
+                                                        <tr>
+                                                          <td class="nowrap">
+                                                            <a href="#" class="unit_link" data-unit="knight">
+                                                              <img src="https://dspt.innogamescdn.com/asset/f3e2d00f/graphic/unit/unit_knight.png" class="" data-title="Paladino" />
+                                                            </a>
+                                                            <input id="unit_input_knight" name="knight" type="checkbox" tabindex="9" value="knight" class="unitsInput" data-all-count="1" />
+                                                          </td>
+                                                        </tr>
+                                                        <tr>
+                                                          <td class="nowrap">
+                                                            <a href="#" class="unit_link" data-unit="snob">
+                                                              <img src="https://dspt.innogamescdn.com/asset/f3e2d00f/graphic/unit/unit_snob.png" class="" data-title="Nobre" />
+                                                            </a>
+                                                            <input id="unit_input_snob" name="snob" type="checkbox" tabindex="10" value="snob" class="unitsInput" data-all-count="0" />
+                                                          </td>
+                                                        </tr>
+                                                      </tbody>
+                                                    </table>
+                                                  </td>
+                                                </tr>
+                                                <tr>
+                                                  <td colspan="3">
+                                                    <div id="units_error_message" class="error_message"></div>
+                                                  </td>
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                    <table style="width: 100%">
+                                      <tbody>
+                                        <tr>
+                                          <td>
+                                            <div id="command_time" class="target-select vis" data-on-choice="onCommandTargetChoice">
+                                              <h4>Hora de chegada:</h4>
+                                              <table class="vis" style="width: 100%">
+                                                <tbody>
+                                                  <tr>
+                                                    <td>
+                                                      <div id="time_target" class="target-input float_left" style="width: 100%">
+                                                        <input
+                                                          type="text"
+                                                          name="input"
+                                                          id="time_input"
+                                                          class="target-input-field"
+                                                          value=""
+                                                          autocomplete="off"
+                                                          tabindex="14"
+                                                          placeholder="dd-mm-yyyy hh:mm:ss:ms"
+                                                        />
+                                                      </div>
+                                                    </td>
+                                                  </tr>
+                                                </tbody>
+                                              </table>
+                                            </div>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td align="right">
+                                            <a id="calculate_btn" class="btn">Calcular</a>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                    <div id="results"></div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+          <td class="bg_right"></td>
+        </tr>
+        <tr class="newStyleOnly">
+          <td class="bg_bottomleft">&nbsp;</td>
+          <td class="bg_bottomcenter">&nbsp;</td>
+          <td class="bg_bottomright">&nbsp;</td>
+        </tr>
+      </table>
 
-      <div class="row justify-content-center">
-        <div class="col-auto">
-          <select class="form-select" aria-label="Default select example">
-            <option value="+" selected>+</option>
-            <option value="-">-</option>
-          </select>
-        </div>
-      </div>
+      <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+      <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+        crossorigin="anonymous"
+      ></script>
 
-      <div class="row justify-content-center">
-        <div class="col mb-3 text-center">
-          <label for="valueHours" class="form-label">Hora</label>
-          <input
-            type="number"
-            class="form-control"
-            id="valueHours"
-            max="23"
-            min="0"
-          />
-        </div>
-        <div class="col mb-3 text-center">
-          <label for="valueMinutes" class="form-label">Minutos</label>
-          <input
-            type="number"
-            class="form-control"
-            id="valueMinutes"
-            max="59"
-            min="0"
-          />
-        </div>
-        <div class="col mb-3 text-center">
-          <label for="valueSeconds" class="form-label">Segundos</label>
-          <input
-            type="number"
-            class="form-control"
-            id="valueSeconds"
-            max="59"
-            min="0"
-          />
-        </div>
-        <div class="col mb-3 text-center">
-          <label for="valueMiliseconds" class="form-label">Milisegundos</label>
-          <input
-            type="number"
-            class="form-control"
-            id="valueMiliseconds"
-            max="999"
-            min="0"
-          />
-        </div>
-      </div>
-
-      <div class="row justify-content-center">
-        <div class="col-auto mb-3">
-          <a id="calc" class="btn btn-primary">Calcular</a>
-        </div>
-      </div>
-
-      <div class="row justify-content-center">
-        <div class="mb-3 text-center">
-            <input type="text" class="form-control text-uppercase text-center font fw-bold border-0" id="resultDay" />
-          </div>
-        <div class="mb-3 text-center">
-          <input type="text" class="form-control text-uppercase text-center font fw-bold border-0" id="result" />
-        </div>
-      </div>
-    </div>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
-      crossorigin="anonymous"
-    ></script>
-
-    <script src="index.js"></script>
+      <script src="assets/utils.js"></script>
+      <script src="assets/index.js"></script>
+      <script src="assets/main.js"></script>
+    </main>
   </body>
 </html>
