@@ -162,15 +162,28 @@ async function generateHtml(commands) {
       let [x, y] = $(this)[0].origin.split("|");
       let info = await getVillageInfo(x, y);
       let command = $(this)[0].command;
+
+      if (info.id === 0) {
+        return `
+        <tr>
+          <th colspan="2"><a>${info.villageName} (${$(this)[0].origin})</a></th>
+        </tr>
+        <tr>
+          <td><strong>Data de envio:</strong></td>
+          <td>${command.day} ${command.hours}:${command.minutes}:${command.seconds}:<span class="grey small">${command.milliseconds}</span></td>
+        </tr>
+      `;
+      }
+
       return `
-      <tr>
-        <th colspan="2"><a target="_blank" href="https://pt94.tribalwars.com.pt/game.php?village=${info.id}&screen=place">${info.villageName} (${$(this)[0].origin})</a></th>
-      </tr>
-      <tr>
-        <td><strong>Data de envio:</strong></td>
-        <td>${command.day} ${command.hours}:${command.minutes}:${command.seconds}:<span class="grey small">${command.milliseconds}</span></td>
-      </tr>
-    `;
+        <tr>
+          <th colspan="2"><a target="_blank" href="https://pt94.tribalwars.com.pt/game.php?village=${info.id}&screen=place">${info.villageName} (${$(this)[0].origin})</a></th>
+        </tr>
+        <tr>
+          <td><strong>Data de envio:</strong></td>
+          <td>${command.day} ${command.hours}:${command.minutes}:${command.seconds}:<span class="grey small">${command.milliseconds}</span></td>
+        </tr>
+      `;
     })
     .get();
 
@@ -204,11 +217,16 @@ async function getVillageInfo(x, y) {
     .then((text) => {
       var lines = text.split("\n");
       for (let i = 0; i <= lines.length; i++) {
-        var fields = lines[i].split(",");
-        if (fields[2] == x && fields[3] == y) return { id: fields[0], name: fields[1] };
+        if (lines[i] !== undefined) {
+          var fields = lines[i].split(",");
+          if (fields[2] == x && fields[3] == y) return { id: fields[0], name: fields[1] };
+        }
       }
     })
     .then((info) => {
+      if (info === undefined) {
+        return { id: 0, villageName: "Aldeia não encontrada" };
+      }
       const villageName = decodeURIComponent(info.name.replace(/\+/g, " "));
       return { id: info.id, villageName };
     });
