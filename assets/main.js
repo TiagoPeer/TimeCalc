@@ -1,3 +1,4 @@
+let coordInputs = $(".coords_input");
 let targetCoordsInput = $(".target_coords");
 let calculateBtn = $("#calculate_btn");
 let unitsInputs = $(".unitsInput");
@@ -13,8 +14,6 @@ function debug() {
 }
 
 function registerEventHandlers() {
-  const coordInputs = $(".coords_input");
-
   coordInputs.bind("keyup", function (e) {
     let value = $(this).val();
     if (e.which !== 8) {
@@ -124,13 +123,9 @@ function calculateTimes() {
     var resultSeconds = targetSeconds - travelSeconds;
     var resultMiliseconds = targetMilliseconds;
 
-    if (resultHours < 0) {
-      resultHours = 24 + resultHours;
-    }
-
-    if (resultMinutes < 0) {
-      resultHours -= 1;
-      resultMinutes = 60 + resultMinutes;
+    if (resultMiliseconds < 0) {
+      resultSeconds -= 1;
+      resultMiliseconds = 1000 + resultMiliseconds;
     }
 
     if (resultSeconds < 0) {
@@ -138,9 +133,13 @@ function calculateTimes() {
       resultSeconds = 60 + resultSeconds;
     }
 
-    if (resultMiliseconds < 0) {
-      resultSeconds -= 1;
-      resultMiliseconds = 1000 + resultMiliseconds;
+    if (resultMinutes < 0) {
+      resultHours -= 1;
+      resultMinutes = 60 + resultMinutes;
+    }
+
+    if (resultHours < 0) {
+      resultHours = 24 + resultHours;
     }
 
     let givenDate = new Date(`${resultYear}-${resultMonth}-${resultDay}`);
@@ -148,7 +147,7 @@ function calculateTimes() {
     const today = new Date();
 
     const isToday = givenDate.getDate() === today.getDate() && givenDate.getMonth() === today.getMonth() && givenDate.getFullYear() === today.getFullYear();
-
+    console.log(resultHours);
     commands.push({
       origin: originCoordsValue,
       command: {
@@ -170,7 +169,7 @@ async function generateHtml(commands) {
       let [x, y] = $(this)[0].origin.split("|");
       let info = await getVillageInfo(x, y);
       let command = $(this)[0].command;
-
+      console.log(command.hours);
       if (info.id === 0) {
         return `
         <tr>
