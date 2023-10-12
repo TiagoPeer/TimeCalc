@@ -147,7 +147,6 @@ function calculateTimes() {
     const today = new Date();
 
     const isToday = givenDate.getDate() === today.getDate() && givenDate.getMonth() === today.getMonth() && givenDate.getFullYear() === today.getFullYear();
-    console.log(resultHours);
     commands.push({
       origin: originCoordsValue,
       command: {
@@ -169,7 +168,6 @@ async function generateHtml(commands) {
       let [x, y] = $(this)[0].origin.split("|");
       let info = await getVillageInfo(x, y);
       let command = $(this)[0].command;
-      console.log(command.hours);
       if (info.id === 0) {
         return `
         <tr>

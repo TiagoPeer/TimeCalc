@@ -30,11 +30,20 @@ function calculateTravelTime(x1, y1, x2, y2, units) {
 }
 
 function translateToTime(value) {
-  let hours = Math.floor(value / 60);
-  let minutes = Math.floor(value % 60);
-  let seconds = Math.floor((value % 1) * 60);
+
+  let hours = customRound(value / 60);
+  let minutes = customRound(value % 60);
+  let seconds = customRound((value % 1) * 60);
 
   return [hours, minutes, seconds];
+}
+
+function customRound(number) {
+  if (number - Math.floor(number) >= 0.9) {
+      return Math.ceil(number); // Round up
+  } else {
+      return Math.floor(number); // Round down
+  }
 }
 
 function addZeroIsLessThanTen(value) {
